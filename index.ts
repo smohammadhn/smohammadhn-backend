@@ -1,7 +1,7 @@
 // Get project absolute Path
 import { resolve } from 'path'
 
-// enable usage of .env file for environment variables
+// DOTENV: enable usage of .env file for environment variables
 import dotenv from 'dotenv'
 dotenv.config({ path: resolve() + '/.env' })
 
@@ -9,11 +9,21 @@ dotenv.config({ path: resolve() + '/.env' })
 import config from 'config'
 ;(config as any).path = resolve()
 
-// --------------
-
+// Init express and use some built-in middlewares:
+// STATIC: enable /static folder to be shown at domain:port/somethingInsideStaticFolder
+// JSON: if the body of the incoming request contains a JSON object, it populates req.body
+// URLENCODED: parses incoming requests with urlencoded payloads and is based on body-parser (eg. requests using html forms)
 import express, { Application, NextFunction, Request, Response } from 'express'
-
 const app: Application = express()
+app.use(express.static('public'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+// MORGAN: logging api requests
+import morgan from 'morgan'
+app.use(morgan('tiny'))
+
+// --------------
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.send('heelo')
