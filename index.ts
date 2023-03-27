@@ -1,13 +1,13 @@
+// Get project absolute Path
+import { resolve } from 'path'
+
 // enable usage of .env file for environment variables
 import dotenv from 'dotenv'
-dotenv.config({ path: __dirname + '/.env' })
+dotenv.config({ path: resolve() + '/.env' })
 
+// CONFIG: getting and setting global configuration for the project
 import config from 'config'
-import { resolve } from 'path'
 ;(config as any).path = resolve()
-console.log(config.get('path'))
-console.log(config.get('port'))
-console.log(config.get('jwtSecret'))
 
 // --------------
 
@@ -19,4 +19,6 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.send('heelo')
 })
 
-app.listen(8000, () => console.log('server running on port 8000'))
+app.listen(config.get('port'), () =>
+  console.log(`server running on port ${config.get('port')}`)
+)
