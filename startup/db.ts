@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import config from 'config'
-const logger = require(config.get('path') + '/startup/logging')
+import logger from './logging'
 
 export default function () {
   mongoose.set('strictQuery', false)

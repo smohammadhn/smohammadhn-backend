@@ -25,8 +25,10 @@ app.use(morgan('tiny'))
 
 // startup files imports
 import logger from './startup/logging'
-import db from './startup/db'
-db()
+import initDb from './startup/db'
+import initRoutes from './startup/routes'
+initDb()
+initRoutes(app)
 
 // check for required environment variables before starting the server
 let isEnvVarsSet = true
