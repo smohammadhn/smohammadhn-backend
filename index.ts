@@ -23,12 +23,21 @@ app.use(express.urlencoded({ extended: true }))
 import morgan from 'morgan'
 app.use(morgan('tiny'))
 
-// --------------
+// startup files imports
+import logger from './startup/logging'
 
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-  res.send('heelo')
+// check for required environment variables before starting the server
+let isEnvVarsSet = true
+;['PORT', 'JWT_SECRET'].forEach((envKey) => {
+  if (!process.env[envKey]) {
+    logger.error(
+      `${envKey} environment variable not found, Have you forgotten to set your environment variables?`
+    )
+    return (isEnvVarsSet = false)
+  }
 })
 
-app.listen(config.get('port'), () =>
-  console.log(`server running on port ${config.get('port')}`)
-)
+if (isEnvVarsSet) {
+  const port = config.get('port')
+  app.listen(port, () => logger.info(`Listening on port ${port} ...`))
+}
