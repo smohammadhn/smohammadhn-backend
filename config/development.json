@@ -1,4 +1,4 @@
 {
   "name": "smohammadhn - development",
-  "db": "mongodb://localhost/smohammadhn"
+  "db": "mongodb://127.0.0.1:27017/smohammadhn"
 }
