@@ -7,6 +7,7 @@ import Introduction, {
 
 const router = express.Router()
 
+// get methods
 router.get('/', async (req: Request, res: Response) => {
   await Introduction.find()
     .sort('_id')
@@ -40,5 +41,21 @@ router.post(
     await introduction.save().then((result) => res.send(result))
   }
 )
+
+// put method
+router.put('/:id', oid, async (req: Request, res: Response) => {
+  if (!validateIntroduction(req.body, res)) return
+
+  await Introduction.findByIdAndUpdate(req.params.id, req.body).then(
+    (result) => {
+      if (!result)
+        return res
+          .status(404)
+          .send('Introduction item with the given id not found!')
+
+      res.send(result)
+    }
+  )
+})
 
 export = router
