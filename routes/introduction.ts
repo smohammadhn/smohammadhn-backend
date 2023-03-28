@@ -1,8 +1,45 @@
 import express, { Request, Response } from 'express'
+import Introduction, {
+  validateIntroduction,
+  IntrodutionDocument,
+} from '../models/introduction'
 const router = express.Router()
 
-router.get('/', (req: Request, res: Response) => {
-  res.send('Welcome to my introduction!!')
+router.get('/', async (req: Request, res: Response) => {
+  await Introduction.find()
+    .sort('_id')
+    .then((result) => {
+      res.send(result)
+    })
 })
+
+router.get(
+  '/:id',
+  async ({ params }: { params: { id: number } }, res: Response) => {
+    await Introduction.findById(params.id).then((introductionItem) => {
+      if (!introductionItem)
+        return res
+          .status(404)
+          .send('Introduction item with the given id not found!')
+
+      res.send(introductionItem)
+    })
+  }
+)
+
+// post methods
+router.post(
+  '/',
+  async ({ body }: { body: IntrodutionDocument }, res: Response) => {
+    if (!validateIntroduction(body, res)) return
+
+    const introduction = new Introduction({
+      key: body.key,
+      value: body.value,
+    })
+
+    await introduction.save().then((result) => res.send(result))
+  }
+)
 
 export = router
