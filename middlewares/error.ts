@@ -12,7 +12,7 @@ export default function (
   next: NextFunction
 ) {
   logger.error(err.message)
-  res.status(500).send('Something is wrong on the server:>> ' + err)
+  res.status(400).send('Bad request:>> ' + err)
 
   // This mutherfucker took 2 hours of my life, do not delete it
   next()

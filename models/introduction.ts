@@ -25,7 +25,7 @@ const introductionSchema = new mongoose.Schema({
 
 export function validateIntroduction(body: IntrodutionDocument, res: Response) {
   const schema = Joi.object({
-    key: Joi.string().required().min(3).max(20),
+    key: Joi.string().required().min(3).max(20).valid('description'),
     value: Joi.string().required().min(5).max(100),
   })
 
