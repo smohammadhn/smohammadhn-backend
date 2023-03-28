@@ -1,8 +1,10 @@
 import express, { Request, Response } from 'express'
+import oid from '../middlewares/oid'
 import Introduction, {
   validateIntroduction,
   IntrodutionDocument,
 } from '../models/introduction'
+
 const router = express.Router()
 
 router.get('/', async (req: Request, res: Response) => {
@@ -13,19 +15,16 @@ router.get('/', async (req: Request, res: Response) => {
     })
 })
 
-router.get(
-  '/:id',
-  async ({ params }: { params: { id: number } }, res: Response) => {
-    await Introduction.findById(params.id).then((introductionItem) => {
-      if (!introductionItem)
-        return res
-          .status(404)
-          .send('Introduction item with the given id not found!')
+router.get('/:id', oid, async (req: Request, res: Response) => {
+  await Introduction.findById(req.params.id).then((introductionItem) => {
+    if (!introductionItem)
+      return res
+        .status(404)
+        .send('Introduction item with the given id not found!')
 
-      res.send(introductionItem)
-    })
-  }
-)
+    res.send(introductionItem)
+  })
+})
 
 // post methods
 router.post(
