@@ -61,8 +61,11 @@ router.put('/:id', oid, async (req: Request, res: Response) => {
 router.delete('/:id', oid, async (req, res) => {
   await Introduction.findByIdAndRemove(req.params.id).then((result) => {
     if (!result)
-      res.status(404).send('Introduction item with the given id not found!')
-    else res.send(result)
+      return res
+        .status(404)
+        .send('Introduction item with the given id not found!')
+
+    res.send(result)
   })
 })
 

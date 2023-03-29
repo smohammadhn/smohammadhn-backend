@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import Joi from 'joi'
-import { Response, Request } from 'express'
+import { Response } from 'express'
 
 export interface IntrodutionDocument {
   key: 'description'
