@@ -19,6 +19,9 @@ app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// STATIC: enable /public folder to be shown at domain:port/somethingInsideStaticFolder
+app.use(express.static('public'))
+
 // MORGAN: logging api requests
 import morgan from 'morgan'
 app.use(morgan('tiny'))
