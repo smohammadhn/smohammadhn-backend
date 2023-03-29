@@ -32,13 +32,13 @@ const projectSchema = new mongoose.Schema({
   },
   websiteLink: {
     type: String,
-    required: true,
+    default: null,
     minLength: 3,
     maxLength: 100,
   },
   repositoryLink: {
     type: String,
-    required: true,
+    default: null,
     minLength: 3,
     maxLength: 100,
   },
@@ -53,8 +53,8 @@ export function validateProject(body: ProjectDocument, res: Response) {
     title: Joi.string().required().min(3).max(30),
     img: Joi.string().required().min(3).max(30),
     description: Joi.string().required().min(3).max(300),
-    websiteLink: Joi.string().required().min(3).max(100),
-    repositorylink: Joi.string().required().min(3).max(100),
+    websiteLink: Joi.string().min(3).max(100),
+    repositorylink: Joi.string().min(3).max(100),
     techStack: Joi.array().items(Joi.string()).required().min(1),
   })
 
