@@ -4,6 +4,7 @@ import { Response } from 'express'
 
 export interface ProjectDocument {
   img: string
+  logo: string
   title: string
   description: string
   techStack: string[]
@@ -15,6 +16,11 @@ const projectSchema = new mongoose.Schema({
   img: {
     type: String,
     required: true,
+    minLength: 3,
+    maxLength: 30,
+  },
+  logo: {
+    type: String,
     minLength: 3,
     maxLength: 30,
   },
@@ -52,6 +58,7 @@ export function validateProject(body: ProjectDocument, res: Response) {
   const schema = Joi.object({
     title: Joi.string().required().min(3).max(30),
     img: Joi.string().required().min(3).max(30),
+    logo: Joi.string().min(3).max(30),
     description: Joi.string().required().min(3).max(300),
     websiteLink: Joi.string().min(3).max(100),
     repositorylink: Joi.string().min(3).max(100),
