@@ -1,4 +1,5 @@
 {
   "port": "PORT",
-  "jwtSecret": "JWT_SECRET"
+  "jwtSecret": "JWT_SECRET",
+  "dbUri": "DB_CONNECTION_STRING"
 }

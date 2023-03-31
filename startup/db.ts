@@ -7,8 +7,8 @@ export default function () {
   mongoose.set('returnOriginal', false)
 
   mongoose
-    .connect(config.get('db'))
+    .connect(config.get('dbUri'))
     .then(() =>
-      logger.info(`Success: connected to ${config.get('db')} database`)
+      logger.info(`Success: connected to ${config.get('dbUri')} database`)
     )
 }
