@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import oid from '../middlewares/oid'
-import Contact, { validateContact, ContactDocument } from '../models/contact'
+import Contact, { validateContact, ContactDocument } from '../models/users'
 
 const router = express.Router()
 
@@ -46,6 +46,7 @@ router.put('/:id', oid, async (req: Request, res: Response) => {
   })
 })
 
+// delete method
 router.delete('/:id', oid, async (req: Request, res: Response) => {
   await Contact.findByIdAndRemove(req.params.id).then((result) => {
     if (!result)

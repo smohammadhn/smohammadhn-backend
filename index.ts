@@ -10,17 +10,14 @@ import config from 'config'
 ;(config as any).path = resolve()
 
 // Init express and use some built-in middlewares:
-// STATIC: enable /static folder to be shown at domain:port/somethingInsideStaticFolder
+// STATIC: enable /public folder to be shown at domain:port/somethingInsideStaticFolder
 // JSON: if the body of the incoming request contains a JSON object, it populates req.body
 // URLENCODED: parses incoming requests with urlencoded payloads and is based on body-parser (eg. requests using html forms)
-import express, { Application, NextFunction, Request, Response } from 'express'
+import express, { Application } from 'express'
 const app: Application = express()
 app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
-// STATIC: enable /public folder to be shown at domain:port/somethingInsideStaticFolder
-app.use(express.static('public'))
 
 // MORGAN: logging api requests
 import morgan from 'morgan'
@@ -35,7 +32,8 @@ initRoutes(app)
 
 // check for required environment variables before starting the server
 let isEnvVarsSet = true
-;['PORT', 'JWT_SECRET'].forEach((envKey) => {
+const requiredEnvVars = ['PORT', 'JWT_SECRET']
+requiredEnvVars.forEach((envKey) => {
   if (!process.env[envKey]) {
     logger.error(
       `${envKey} environment variable not found, Have you forgotten to set your environment variables?`

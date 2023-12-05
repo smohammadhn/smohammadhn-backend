@@ -1,20 +1,10 @@
 import { Application } from 'express'
 import error from '../middlewares/error'
 
-import contact from '../routes/contact'
-import expertise from '../routes/expertise'
-import home from '../routes/home'
-import introduction from '../routes/introduction'
-import projects from '../routes/projects'
-import workExperience from '../routes/workExperience'
+import user from '../routes/user'
 
 export default async function (app: Application) {
-  app.use('/', home)
-  app.use('/api/expertise', expertise)
-  app.use('/api/introduction', introduction)
-  app.use('/api/projects', projects)
-  app.use('/api/workExperience', workExperience)
-  app.use('/api/contact', contact)
+  app.use('/api/user', user)
 
   // global error handler (works in combination with express-async-errors)
   app.use(error)
